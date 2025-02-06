@@ -1,4 +1,4 @@
-
+﻿
 #include "Server.h"
 #include "../Auth/AuthManager.h"
 #include "../Character/CharacterDatabase.h"
@@ -41,24 +41,37 @@ void Server::handleClient(tcp::socket socket) {
 
             response = AuthManager::authenticateUser(username, password) ? "SUCCESS\n" : "FAILED\n";
         }
-        else if (command == "CREATE_CHARACTER") {
+
+        //std::string response = "FAILED\n";
+        if (command == "CREATE_CHARACTER") {
             std::getline(input, accountName, ':');
             std::getline(input, charName, ':');
             std::getline(input, race, ':');
             std::getline(input, charClass, ':');
             std::getline(input, gender, ':');
 
+            std::cout << "Creare personaj: " << accountName << ", " << charName << ", " << race << ", " << charClass << ", " << gender << std::endl;
+
             CharacterDatabase charDB;
             if (charDB.createCharacter(accountName, charName, race, charClass, gender)) {
+                std::cout << "Personaj creat cu succes!" << std::endl;
                 response = "CHARACTER_CREATED\n";
             }
             else {
+                std::cout << "Eroare la crearea personajului!" << std::endl;
                 response = "FAILED_TO_CREATE_CHARACTER\n";
             }
-        }
+            
+            std::cout << "Răspuns final către client: " << response << std::endl;  // Log pentru a verifica ce trimite serverul
 
+        }
+        std::cout << "Trimitere răspuns către client: " << response << std::endl;
         boost::asio::write(socket, boost::asio::buffer(response), error);
-    }
+if (error) {
+    std::cerr << "Eroare la trimiterea răspunsului: " << error.message() << std::endl;  // Log pentru erori
+} else {
+    std::cout << "Răspuns trimis cu succes: " << response << std::endl;  // Log pentru succes
+}    }
     catch (std::exception& e) {
         std::cerr << "Client error: " << e.what() << std::endl;
     }

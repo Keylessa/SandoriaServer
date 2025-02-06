@@ -1,4 +1,4 @@
-#include "CharacterDatabase.h"
+﻿#include "CharacterDatabase.h"
 #include <iostream>
 
 CharacterDatabase::CharacterDatabase() {
@@ -24,6 +24,8 @@ bool CharacterDatabase::createCharacter(const std::string& accountName, const st
         pstmt->setString(4, charClass);
         pstmt->setString(5, gender);
         pstmt->executeUpdate();
+
+        std::cout << "Data inserată în baza de date cu succes!" << std::endl;  // Log pentru succes
         return true;
     }
     catch (sql::SQLException& e) {
