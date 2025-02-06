@@ -1,6 +1,6 @@
+// Database.h - Gestionarea conexiunii cu MySQL
 #pragma once
 
-// Database.h - Gestionarea conexiunii cu MySQL
 #ifndef DATABASE_H
 #define DATABASE_H
 

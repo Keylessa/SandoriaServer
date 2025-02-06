@@ -1,6 +1,7 @@
 
 #include "Server.h"
 #include "../Auth/AuthManager.h"
+#include "../Character/CharacterDatabase.h"
 #include <iostream>
 #include <thread>
 
@@ -28,15 +29,32 @@ void Server::handleClient(tcp::socket socket) {
         std::cout << "Received Data: " << received_data << std::endl;
 
         std::istringstream input(received_data);
-        std::string command, username, password;
+        std::string command, accountName, charName, race, charClass, gender;
 
         std::getline(input, command, ':');
-        std::getline(input, username, ':');
-        std::getline(input, password, ':');
 
         std::string response = "FAILED\n";
         if (command == "LOGIN") {
+            std::string username, password;
+            std::getline(input, username, ':');
+            std::getline(input, password, ':');
+
             response = AuthManager::authenticateUser(username, password) ? "SUCCESS\n" : "FAILED\n";
+        }
+        else if (command == "CREATE_CHARACTER") {
+            std::getline(input, accountName, ':');
+            std::getline(input, charName, ':');
+            std::getline(input, race, ':');
+            std::getline(input, charClass, ':');
+            std::getline(input, gender, ':');
+
+            CharacterDatabase charDB;
+            if (charDB.createCharacter(accountName, charName, race, charClass, gender)) {
+                response = "CHARACTER_CREATED\n";
+            }
+            else {
+                response = "FAILED_TO_CREATE_CHARACTER\n";
+            }
         }
 
         boost::asio::write(socket, boost::asio::buffer(response), error);

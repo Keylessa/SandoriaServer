@@ -25,6 +25,12 @@
     <Filter Include="Header Files\Auth">
       <UniqueIdentifier>{90c2dc65-232f-47c7-9bdc-bd5dec4a6006}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Character">
+      <UniqueIdentifier>{63661bf9-a712-4f25-96ca-c871b40ff2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Character">
+      <UniqueIdentifier>{5a0f9566-b249-4d46-adac-4a2b7f099a5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sandoria Server.cpp">
@@ -38,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="Core\Server.cpp">
       <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterDatabase.cpp">
+      <Filter>Source Files\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Core\Server.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterDatabase.h">
+      <Filter>Header Files\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
