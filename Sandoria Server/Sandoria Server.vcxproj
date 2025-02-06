@@ -135,11 +135,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Auth\AuthManager.cpp" />
+    <ClCompile Include="Character\CharacterDatabase.cpp" />
     <ClCompile Include="Core\Database.cpp" />
+    <ClCompile Include="Core\Server.cpp" />
     <ClCompile Include="Sandoria Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Auth\AuthManager.h" />
+    <ClInclude Include="Character\CharacterDatabase.h" />
+    <ClInclude Include="Core\Config.h" />
     <ClInclude Include="Core\Database.h" />
+    <ClInclude Include="Core\Server.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
