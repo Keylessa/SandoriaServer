@@ -16,8 +16,10 @@ void Server::run() {
     }
 }
 
-void Server::handleClient(tcp::socket socket) {
-    try {
+void Server::handleClient(tcp::socket socket)
+{
+    try
+    {
         char data[1024] = { 0 };
         boost::system::error_code error;
         size_t length = socket.read_some(boost::asio::buffer(data), error);
@@ -34,16 +36,27 @@ void Server::handleClient(tcp::socket socket) {
         std::getline(input, command, ':');
 
         std::string response = "FAILED\n";
-        if (command == "LOGIN") {
+
+        if (command == "LOGIN")
+        {
             std::string username, password;
             std::getline(input, username, ':');
             std::getline(input, password, ':');
 
-            response = AuthManager::authenticateUser(username, password) ? "SUCCESS\n" : "FAILED\n";
-        }
+            bool isAuthenticated = AuthManager::authenticateUser(username, password);
+            response = isAuthenticated ? "SUCCESS\n" : "FAILED\n";
 
-        //std::string response = "FAILED\n";
-        if (command == "CREATE_CHARACTER") {
+            boost::asio::write(socket, boost::asio::buffer(response));
+
+            // Închidem conexiunea DOAR după ce am trimis mesajul de eșec
+            if (!isAuthenticated)
+            {
+                socket.close();
+                return;
+            }
+        }
+        else if (command == "CREATE_CHARACTER")
+        {
             std::getline(input, accountName, ':');
             std::getline(input, charName, ':');
             std::getline(input, race, ':');
@@ -61,18 +74,46 @@ void Server::handleClient(tcp::socket socket) {
                 std::cout << "Eroare la crearea personajului!" << std::endl;
                 response = "FAILED_TO_CREATE_CHARACTER\n";
             }
-            
-            std::cout << "Răspuns final către client: " << response << std::endl;  // Log pentru a verifica ce trimite serverul
-
         }
+        else if (command == "GET_CHARACTERS")
+        {
+            std::getline(input, accountName, ':');
+
+            CharacterDatabase charDB;
+            std::vector<CharacterData> characters = charDB.getCharacters(accountName);
+
+            if (characters.empty()) {
+                response = "NO_CHARACTERS\n";
+            }
+            else {
+                response = "CHAR_LIST:";
+                for (const auto& character : characters) {
+                    response += character.name + "," + character.charClass + "," + character.race + ";";
+                }
+                response += "\n";
+            }
+        }
+        else if (command == "CHECK_NAME")
+        {
+            std::getline(input, charName, ':');
+
+            CharacterDatabase charDB;
+            bool nameExists = charDB.doesCharacterExist(charName);
+
+            response = nameExists ? "NAME_TAKEN\n" : "NAME_AVAILABLE\n";
+        }
+
         std::cout << "Trimitere răspuns către client: " << response << std::endl;
         boost::asio::write(socket, boost::asio::buffer(response), error);
-if (error) {
-    std::cerr << "Eroare la trimiterea răspunsului: " << error.message() << std::endl;  // Log pentru erori
-} else {
-    std::cout << "Răspuns trimis cu succes: " << response << std::endl;  // Log pentru succes
-}    }
-    catch (std::exception& e) {
+        if (error) {
+            std::cerr << "Eroare la trimiterea răspunsului: " << error.message() << std::endl;
+        }
+        else {
+            std::cout << "Răspuns trimis cu succes: " << response << std::endl;
+        }
+    }
+    catch (std::exception& e)
+    {
         std::cerr << "Client error: " << e.what() << std::endl;
     }
 }

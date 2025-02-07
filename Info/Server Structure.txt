@@ -39,31 +39,7 @@ int main() {
 //-----------------------------------------------------------------------
 
 
-// Database.h - Gestionarea conexiunii cu MySQL
 
-#pragma once
-
-#ifndef DATABASE_H
-#define DATABASE_H
-
-#include "Config.h"
-#include <mysql_driver.h>
-#include <mysql_connection.h>
-#include <cppconn/prepared_statement.h>
-#include <memory>
-#include <iostream>
-
-class Database {
-public:
-    Database(const std::string& dbName);
-    ~Database();
-    std::unique_ptr<sql::PreparedStatement> prepareStatement(const std::string& query);
-private:
-    sql::mysql::MySQL_Driver* driver;
-    std::unique_ptr<sql::Connection> conn;
-};
-
-#endif // DATABASE_H
 
 
 //Database.cpp
@@ -88,33 +64,8 @@ std::unique_ptr<sql::PreparedStatement> Database::prepareStatement(const std::st
 
 
 
-
-
-//Server.h
-#pragma once
-
-#ifndef SERVER_H
-#define SERVER_H
-
-#include <boost/asio.hpp>
-
-using boost::asio::ip::tcp;
-
-class Server {
-public:
-    Server(short port);
-    void run();
-private:
-    void handleClient(tcp::socket socket);
-    boost::asio::io_context io_context;
-    tcp::acceptor acceptor;
-};
-
-#endif // SERVER_H
-
-
-
 //Server.cpp
+
 
 
 #include "Server.h"
@@ -197,22 +148,6 @@ if (error) {
 
 
 
-
-// AuthManager.h - Gestionarea autentificării
-#ifndef AUTHMANAGER_H
-#define AUTHMANAGER_H
-
-#include "../Core/Database.h"
-
-class AuthManager {
-public:
-    static bool authenticateUser(const std::string& username, const std::string& password);
-};
-
-#endif // AUTHMANAGER_H
-
-
-
 // AuthManager.cpp
 
 #include "AuthManager.h"
@@ -225,34 +160,6 @@ bool AuthManager::authenticateUser(const std::string& username, const std::strin
     auto res = std::unique_ptr<sql::ResultSet>(pstmt->executeQuery());
     return res->next();
 }
-
-
-
-
-
-
-// CharacterDatabase.h - Clasa pentru interacțiunea cu baza de date characters
-#pragma once
-
-#pragma once
-#include <mysql_driver.h>
-#include <mysql_connection.h>
-#include <cppconn/prepared_statement.h>
-#include <cppconn/resultset.h>
-#include "../Core/Config.h"
-#include <memory>
-#include <string>
-
-class CharacterDatabase {
-public:
-    CharacterDatabase();
-    ~CharacterDatabase();
-    bool createCharacter(const std::string& accountName, const std::string& charName, const std::string& race, const std::string& charClass, const std::string& gender);
-
-private:
-    sql::mysql::MySQL_Driver* driver;
-    std::unique_ptr<sql::Connection> conn;
-};
 
 
 

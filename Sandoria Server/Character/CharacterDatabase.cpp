@@ -33,3 +33,38 @@ bool CharacterDatabase::createCharacter(const std::string& accountName, const st
         return false;
     }
 }
+
+std::vector<CharacterData> CharacterDatabase::getCharacters(const std::string& accountName) {
+    std::vector<CharacterData> characters;
+    try {
+        std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement(
+            "SELECT charName, class, race FROM characters WHERE accountName = ?"));
+        pstmt->setString(1, accountName);
+        std::unique_ptr<sql::ResultSet> res(pstmt->executeQuery());
+
+        while (res->next()) {
+            characters.push_back({ res->getString("charName"), res->getString("class"), res->getString("race") });
+        }
+    }
+    catch (sql::SQLException& e) {
+        std::cerr << "[MySQL Error] " << e.what() << std::endl;
+    }
+    return characters;
+}
+
+bool CharacterDatabase::doesCharacterExist(const std::string& charName)
+{
+    try {
+        std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement(
+            "SELECT COUNT(*) FROM characters WHERE charName = ?"));
+        pstmt->setString(1, charName);
+        std::unique_ptr<sql::ResultSet> res(pstmt->executeQuery());
+
+        res->next();
+        return res->getInt(1) > 0;  // Returnează true dacă există cel puțin un rezultat
+    }
+    catch (sql::SQLException& e) {
+        std::cerr << "[MySQL Error] " << e.what() << std::endl;
+        return true;  // Dacă apare o eroare, presupunem că numele nu e disponibil pentru siguranță
+    }
+}
