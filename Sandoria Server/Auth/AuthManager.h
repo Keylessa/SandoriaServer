@@ -7,6 +7,8 @@
 class AuthManager {
 public:
     static bool authenticateUser(const std::string& username, const std::string& password);
+
+    static int getAccountID(const std::string& username, const std::string& password);
 };
 
 #endif // AUTHMANAGER_H

@@ -31,6 +31,9 @@
     <Filter Include="Header Files\Character">
       <UniqueIdentifier>{5a0f9566-b249-4d46-adac-4a2b7f099a5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\EnterToWorld">
+      <UniqueIdentifier>{c8e6036a-96d0-4352-9c0f-a6eae74c1e3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sandoria Server.cpp">
@@ -67,6 +70,12 @@
     </ClInclude>
     <ClInclude Include="Character\CharacterDatabase.h">
       <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldManager\EnterWorldPacket.h">
+      <Filter>Header Files\EnterToWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorRotator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

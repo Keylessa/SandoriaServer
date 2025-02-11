@@ -40,3 +40,33 @@ bool AuthManager::authenticateUser(const std::string& username, const std::strin
     }
     return false;
 }
+
+int AuthManager::getAccountID(const std::string& username, const std::string& password)
+{
+    Database db("account");  // Conectează-te la baza de date `account`
+
+    try {
+        std::unique_ptr<sql::PreparedStatement> stmt(db.prepareStatement(
+            "SELECT id, password, salt FROM users WHERE username = ? LIMIT 1"
+        ));
+
+        stmt->setString(1, username);
+
+        std::unique_ptr<sql::ResultSet> res(stmt->executeQuery());
+
+        if (res->next()) {
+            std::string storedHash = res->getString("password");
+            std::string salt = res->getString("salt");
+
+            // ✅ Folosim aceeași metodă de hashing ca `authenticateUser()`
+            if (hashPassword(password, salt) == storedHash) {
+                return res->getInt("id");  // ✅ Returnăm `AccountID` dacă parola este corectă
+            }
+        }
+    }
+    catch (sql::SQLException& e) {
+        std::cerr << "MySQL Error: " << e.what() << std::endl;
+    }
+
+    return -1;  // ❌ Dacă nu găsim contul sau parola e greșită, returnăm -1
+}

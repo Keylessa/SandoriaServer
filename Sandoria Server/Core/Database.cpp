@@ -16,3 +16,8 @@ Database::~Database() {}
 std::unique_ptr<sql::PreparedStatement> Database::prepareStatement(const std::string& query) {
     return std::unique_ptr<sql::PreparedStatement>(conn->prepareStatement(query));
 }
+
+std::unique_ptr<sql::ResultSet> Database::executeQuery(const std::string& query) {
+    std::unique_ptr<sql::PreparedStatement> stmt = prepareStatement(query);
+    return std::unique_ptr<sql::ResultSet>(stmt->executeQuery());
+}

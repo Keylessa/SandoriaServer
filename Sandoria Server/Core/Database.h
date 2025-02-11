@@ -14,8 +14,14 @@
 class Database {
 public:
     Database(const std::string& dbName);
+
     ~Database();
+
     std::unique_ptr<sql::PreparedStatement> prepareStatement(const std::string& query);
+
+    std::unique_ptr<sql::ResultSet> executeQuery(const std::string& query);
+
+
 private:
     sql::mysql::MySQL_Driver* driver;
     std::unique_ptr<sql::Connection> conn;
