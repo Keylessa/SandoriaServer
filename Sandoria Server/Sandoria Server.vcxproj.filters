@@ -13,68 +13,197 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{64b20071-209a-455e-b692-c3fcff4fbb0e}</UniqueIdentifier>
+    <Filter Include="Header Files\1. ServerCore">
+      <UniqueIdentifier>{72e35bbe-33f5-4ad5-ae8f-becba9b27c1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Core">
-      <UniqueIdentifier>{34784414-bb95-4542-b95b-9aad575e1f4b}</UniqueIdentifier>
+    <Filter Include="Header Files\2. AuthServer">
+      <UniqueIdentifier>{2169b2ab-eac4-42dd-b559-d5ea43e454c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Auth">
-      <UniqueIdentifier>{66b4ac68-0db5-41e2-896c-f7b22b700870}</UniqueIdentifier>
+    <Filter Include="Source Files\1. ServerCore">
+      <UniqueIdentifier>{01012447-0144-40ad-8202-d8406341ba89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Auth">
-      <UniqueIdentifier>{90c2dc65-232f-47c7-9bdc-bd5dec4a6006}</UniqueIdentifier>
+    <Filter Include="Source Files\2. AuthServer">
+      <UniqueIdentifier>{91fbbcea-b010-47bf-96cb-0e64d87d4835}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Character">
-      <UniqueIdentifier>{63661bf9-a712-4f25-96ca-c871b40ff2dd}</UniqueIdentifier>
+    <Filter Include="Header Files\3. CharacterServer">
+      <UniqueIdentifier>{1d32283d-374c-4d55-9a0d-72e165d98eea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Character">
-      <UniqueIdentifier>{5a0f9566-b249-4d46-adac-4a2b7f099a5d}</UniqueIdentifier>
+    <Filter Include="Source Files\3. CharacterServer">
+      <UniqueIdentifier>{35a5a87d-cdeb-4194-9887-9f16ba3256e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\EnterToWorld">
-      <UniqueIdentifier>{c8e6036a-96d0-4352-9c0f-a6eae74c1e3d}</UniqueIdentifier>
+    <Filter Include="Header Files\4. WorldServer">
+      <UniqueIdentifier>{3db224a9-3abc-4116-8015-7800449e3eaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\4. WorldServer">
+      <UniqueIdentifier>{cd649cc8-5985-4157-b14f-3bb86f91d1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\5. Network">
+      <UniqueIdentifier>{c0b7c4d6-236d-43d5-95ea-f584e8f8ed1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\5. Network">
+      <UniqueIdentifier>{594db208-8be3-40bf-bfe6-6ab28201267f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\6. Database">
+      <UniqueIdentifier>{e27483c9-38b4-4435-bb5b-b3c7aca9ee7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\6. Database">
+      <UniqueIdentifier>{ccd34c21-17af-4c76-ac0a-1c28749b5074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RPCs">
+      <UniqueIdentifier>{9f2f9448-b3dc-48f4-9b53-416f96dcf368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RPCs">
+      <UniqueIdentifier>{8f498371-2423-4611-b8e9-5e2c7ad02443}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sandoria Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Database.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="1. ServerCore\SGameInstance.cpp">
+      <Filter>Source Files\1. ServerCore</Filter>
     </ClCompile>
-    <ClCompile Include="Auth\AuthManager.cpp">
-      <Filter>Source Files\Auth</Filter>
+    <ClCompile Include="1. ServerCore\SServerConnection.cpp">
+      <Filter>Source Files\1. ServerCore</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Server.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="1. ServerCore\SPlayerController.cpp">
+      <Filter>Source Files\1. ServerCore</Filter>
     </ClCompile>
-    <ClCompile Include="Character\CharacterDatabase.cpp">
-      <Filter>Source Files\Character</Filter>
+    <ClCompile Include="1. ServerCore\SPlayerState.cpp">
+      <Filter>Source Files\1. ServerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="1. ServerCore\SGameMode.cpp">
+      <Filter>Source Files\1. ServerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="1. ServerCore\SGameState.cpp">
+      <Filter>Source Files\1. ServerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="2. AuthServer\SAuthManager.cpp">
+      <Filter>Source Files\2. AuthServer</Filter>
+    </ClCompile>
+    <ClCompile Include="2. AuthServer\SAuthPacket.cpp">
+      <Filter>Source Files\2. AuthServer</Filter>
+    </ClCompile>
+    <ClCompile Include="2. AuthServer\SLoginHandler.cpp">
+      <Filter>Source Files\2. AuthServer</Filter>
+    </ClCompile>
+    <ClCompile Include="3. CharacterServer\SCharacterData.cpp">
+      <Filter>Source Files\3. CharacterServer</Filter>
+    </ClCompile>
+    <ClCompile Include="3. CharacterServer\SCharacterManager.cpp">
+      <Filter>Source Files\3. CharacterServer</Filter>
+    </ClCompile>
+    <ClCompile Include="3. CharacterServer\SCharacterPacket.cpp">
+      <Filter>Source Files\3. CharacterServer</Filter>
+    </ClCompile>
+    <ClCompile Include="4. WorldServer\SEnterWorldHandler.cpp">
+      <Filter>Source Files\4. WorldServer</Filter>
+    </ClCompile>
+    <ClCompile Include="4. WorldServer\SPlayerReplication.cpp">
+      <Filter>Source Files\4. WorldServer</Filter>
+    </ClCompile>
+    <ClCompile Include="4. WorldServer\SWorldManager.cpp">
+      <Filter>Source Files\4. WorldServer</Filter>
+    </ClCompile>
+    <ClCompile Include="4. WorldServer\SWorldPacket.cpp">
+      <Filter>Source Files\4. WorldServer</Filter>
+    </ClCompile>
+    <ClCompile Include="5. Network\SNetworkHandler.cpp">
+      <Filter>Source Files\5. Network</Filter>
+    </ClCompile>
+    <ClCompile Include="5. Network\SRPCManager.cpp">
+      <Filter>Source Files\5. Network</Filter>
+    </ClCompile>
+    <ClCompile Include="5. Network\STCPConnection.cpp">
+      <Filter>Source Files\5. Network</Filter>
+    </ClCompile>
+    <ClCompile Include="6. Database\SAccountTable.cpp">
+      <Filter>Source Files\6. Database</Filter>
+    </ClCompile>
+    <ClCompile Include="6. Database\SCharacterTable.cpp">
+      <Filter>Source Files\6. Database</Filter>
+    </ClCompile>
+    <ClCompile Include="6. Database\SDatabaseManager.cpp">
+      <Filter>Source Files\6. Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Database.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Config.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Auth\AuthManager.h">
-      <Filter>Header Files\Auth</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Server.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\CharacterDatabase.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldManager\EnterWorldPacket.h">
-      <Filter>Header Files\EnterToWorld</Filter>
-    </ClInclude>
     <ClInclude Include="VectorRotator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="1. ServerCore\SGameInstance.h">
+      <Filter>Header Files\1. ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="1. ServerCore\SServerConnection.h">
+      <Filter>Header Files\1. ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="1. ServerCore\SGameMode.h">
+      <Filter>Header Files\1. ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="1. ServerCore\SGameState.h">
+      <Filter>Header Files\1. ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="1. ServerCore\SPlayerController.h">
+      <Filter>Header Files\1. ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="1. ServerCore\SPlayerState.h">
+      <Filter>Header Files\1. ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="2. AuthServer\SAuthManager.h">
+      <Filter>Header Files\2. AuthServer</Filter>
+    </ClInclude>
+    <ClInclude Include="2. AuthServer\SAuthPacket.h">
+      <Filter>Header Files\2. AuthServer</Filter>
+    </ClInclude>
+    <ClInclude Include="2. AuthServer\SLoginHandler.h">
+      <Filter>Header Files\2. AuthServer</Filter>
+    </ClInclude>
+    <ClInclude Include="3. CharacterServer\SCharacterData.h">
+      <Filter>Header Files\3. CharacterServer</Filter>
+    </ClInclude>
+    <ClInclude Include="3. CharacterServer\SCharacterManager.h">
+      <Filter>Header Files\3. CharacterServer</Filter>
+    </ClInclude>
+    <ClInclude Include="3. CharacterServer\SCharacterPacket.h">
+      <Filter>Header Files\3. CharacterServer</Filter>
+    </ClInclude>
+    <ClInclude Include="4. WorldServer\SEnterWorldHandler.h">
+      <Filter>Header Files\4. WorldServer</Filter>
+    </ClInclude>
+    <ClInclude Include="4. WorldServer\SPlayerReplication.h">
+      <Filter>Header Files\4. WorldServer</Filter>
+    </ClInclude>
+    <ClInclude Include="4. WorldServer\SWorldManager.h">
+      <Filter>Header Files\4. WorldServer</Filter>
+    </ClInclude>
+    <ClInclude Include="4. WorldServer\SWorldPacket.h">
+      <Filter>Header Files\4. WorldServer</Filter>
+    </ClInclude>
+    <ClInclude Include="5. Network\SNetworkHandler.h">
+      <Filter>Header Files\5. Network</Filter>
+    </ClInclude>
+    <ClInclude Include="5. Network\SRPCManager.h">
+      <Filter>Header Files\5. Network</Filter>
+    </ClInclude>
+    <ClInclude Include="5. Network\STCPConnection.h">
+      <Filter>Header Files\5. Network</Filter>
+    </ClInclude>
+    <ClInclude Include="6. Database\SDatabaseManager.h">
+      <Filter>Header Files\6. Database</Filter>
+    </ClInclude>
+    <ClInclude Include="6. Database\SCharacterTable.h">
+      <Filter>Header Files\6. Database</Filter>
+    </ClInclude>
+    <ClInclude Include="6. Database\SAccountTable.h">
+      <Filter>Header Files\6. Database</Filter>
+    </ClInclude>
+    <ClInclude Include="6. Database\Config.h">
+      <Filter>Header Files\6. Database</Filter>
+    </ClInclude>
+    <ClInclude Include="8. Globals\Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
