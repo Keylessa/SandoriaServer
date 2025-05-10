@@ -39,31 +39,7 @@ int main() {
 //-----------------------------------------------------------------------
 
 
-// Database.h - Gestionarea conexiunii cu MySQL
 
-#pragma once
-
-#ifndef DATABASE_H
-#define DATABASE_H
-
-#include "Config.h"
-#include <mysql_driver.h>
-#include <mysql_connection.h>
-#include <cppconn/prepared_statement.h>
-#include <memory>
-#include <iostream>
-
-class Database {
-public:
-    Database(const std::string& dbName);
-    ~Database();
-    std::unique_ptr<sql::PreparedStatement> prepareStatement(const std::string& query);
-private:
-    sql::mysql::MySQL_Driver* driver;
-    std::unique_ptr<sql::Connection> conn;
-};
-
-#endif // DATABASE_H
 
 
 //Database.cpp
@@ -88,35 +64,13 @@ std::unique_ptr<sql::PreparedStatement> Database::prepareStatement(const std::st
 
 
 
-
-
-//Server.h
-#pragma once
-
-#ifndef SERVER_H
-#define SERVER_H
-
-#include <boost/asio.hpp>
-
-using boost::asio::ip::tcp;
-
-class Server {
-public:
-    Server(short port);
-    void run();
-private:
-    void handleClient(tcp::socket socket);
-    boost::asio::io_context io_context;
-    tcp::acceptor acceptor;
-};
-
-#endif // SERVER_H
-
-
-
 //Server.cpp
+
+
+
 #include "Server.h"
 #include "../Auth/AuthManager.h"
+#include "../Character/CharacterDatabase.h"
 #include <iostream>
 #include <thread>
 
@@ -144,40 +98,53 @@ void Server::handleClient(tcp::socket socket) {
         std::cout << "Received Data: " << received_data << std::endl;
 
         std::istringstream input(received_data);
-        std::string command, username, password;
+        std::string command, accountName, charName, race, charClass, gender;
 
         std::getline(input, command, ':');
-        std::getline(input, username, ':');
-        std::getline(input, password, ':');
 
         std::string response = "FAILED\n";
         if (command == "LOGIN") {
+            std::string username, password;
+            std::getline(input, username, ':');
+            std::getline(input, password, ':');
+
             response = AuthManager::authenticateUser(username, password) ? "SUCCESS\n" : "FAILED\n";
         }
 
+        //std::string response = "FAILED\n";
+        if (command == "CREATE_CHARACTER") {
+            std::getline(input, accountName, ':');
+            std::getline(input, charName, ':');
+            std::getline(input, race, ':');
+            std::getline(input, charClass, ':');
+            std::getline(input, gender, ':');
+
+            std::cout << "Creare personaj: " << accountName << ", " << charName << ", " << race << ", " << charClass << ", " << gender << std::endl;
+
+            CharacterDatabase charDB;
+            if (charDB.createCharacter(accountName, charName, race, charClass, gender)) {
+                std::cout << "Personaj creat cu succes!" << std::endl;
+                response = "CHARACTER_CREATED\n";
+            }
+            else {
+                std::cout << "Eroare la crearea personajului!" << std::endl;
+                response = "FAILED_TO_CREATE_CHARACTER\n";
+            }
+            
+            std::cout << "Răspuns final către client: " << response << std::endl;  // Log pentru a verifica ce trimite serverul
+
+        }
+        std::cout << "Trimitere răspuns către client: " << response << std::endl;
         boost::asio::write(socket, boost::asio::buffer(response), error);
-    }
+if (error) {
+    std::cerr << "Eroare la trimiterea răspunsului: " << error.message() << std::endl;  // Log pentru erori
+} else {
+    std::cout << "Răspuns trimis cu succes: " << response << std::endl;  // Log pentru succes
+}    }
     catch (std::exception& e) {
         std::cerr << "Client error: " << e.what() << std::endl;
     }
 }
-
-
-
-
-
-// AuthManager.h - Gestionarea autentificării
-#ifndef AUTHMANAGER_H
-#define AUTHMANAGER_H
-
-#include "../Core/Database.h"
-
-class AuthManager {
-public:
-    static bool authenticateUser(const std::string& username, const std::string& password);
-};
-
-#endif // AUTHMANAGER_H
 
 
 
@@ -193,34 +160,6 @@ bool AuthManager::authenticateUser(const std::string& username, const std::strin
     auto res = std::unique_ptr<sql::ResultSet>(pstmt->executeQuery());
     return res->next();
 }
-
-
-
-
-
-
-// CharacterDatabase.h - Clasa pentru interacțiunea cu baza de date characters
-#pragma once
-
-#pragma once
-#include <mysql_driver.h>
-#include <mysql_connection.h>
-#include <cppconn/prepared_statement.h>
-#include <cppconn/resultset.h>
-#include "../Core/Config.h"
-#include <memory>
-#include <string>
-
-class CharacterDatabase {
-public:
-    CharacterDatabase();
-    ~CharacterDatabase();
-    bool createCharacter(const std::string& accountName, const std::string& charName, const std::string& race, const std::string& charClass, const std::string& gender);
-
-private:
-    sql::mysql::MySQL_Driver* driver;
-    std::unique_ptr<sql::Connection> conn;
-};
 
 
 
@@ -252,6 +191,8 @@ bool CharacterDatabase::createCharacter(const std::string& accountName, const st
         pstmt->setString(4, charClass);
         pstmt->setString(5, gender);
         pstmt->executeUpdate();
+
+        std::cout << "Data inserată în baza de date cu succes!" << std::endl;  // Log pentru succes
         return true;
     }
     catch (sql::SQLException& e) {
